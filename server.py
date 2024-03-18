@@ -44,7 +44,7 @@ def receive():
             client.send('PASS'.encode('ascii'))
             password = client.recv(1024).decode('ascii')
 
-            if password != 'adminpwd':
+            if password != 'adminpass':
                 client.send('REFUSE'.encode('ascii'))
                 client.close()
                 continue
