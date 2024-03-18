@@ -34,8 +34,19 @@ def receive():
 
 def write():
     while True:
+        if stop_thread:
+            break
         message = f'{nickname}: {input("")}'
-        client.send(message.encode('ascii'))
+        if message[len(nickname)+2:].startswith('/'):
+            if nickname == 'admin':
+                if message[len(nickname)+2:].startswith('/kick'):
+                    client.send(f'KICK {message[len(nickname)+2+6:]}'.encode('ascii'))
+                elif message[len(nickname)+2:].startswith('/ban'):
+                    client.send(f'BAN {message[len(nickname)+2+5:]}'.encode('ascii'))
+            else:
+                print("You don't have admin privileges.")
+        else:
+            client.send(message.encode('ascii'))
 
 receive_thread = threading.Thread(target=receive)
 receive_thread.start()
