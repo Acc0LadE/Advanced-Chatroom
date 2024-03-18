@@ -25,6 +25,10 @@ def receive():
                     if client.recv(1024).decode('ascii') == 'REFUSE':
                         print("Wrong Password")
                         stop_thread = True
+            elif next_message == 'BAN':
+                print("Cannot connect since you are banned.")
+                client.close()
+                stop_thread = True
             else:
                 print(message)
         except:
